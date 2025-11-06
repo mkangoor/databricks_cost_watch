@@ -1,0 +1,19 @@
+name: lakewatch
+version: 1.0.0
+profile: databricks_uc
+
+models:
+  lakewatch:
+    staging:
+      +schema: staging
+      +materialized: incremental
+      +tag: ["staging"]
+    intermediate:
+      +schema: intermediate
+      +tags: ["intermediate"]
+    marts:
+      +schema: marts
+      +tags: ["marts"]
+
+data_tests:
+  +severity: error

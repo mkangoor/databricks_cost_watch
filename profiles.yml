@@ -1,0 +1,12 @@
+databricks_uc:                              # profile name (referenced by dbt_project.yml)
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: lakewatch
+      schema: dbt
+      host: "{{ env_var('DATABRICKS_HOST') }}"
+      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"         
+      threads: 2
+      connect_timeout: 30
