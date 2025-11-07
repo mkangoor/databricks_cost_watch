@@ -1,6 +1,9 @@
 {{ config(
   materialized='incremental',
   incremental_strategy='merge',
+  incremental_predicates = [
+      "DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"
+    ],
   unique_key=['account_id', 'sku_name', 'cloud', 'usage_unit'],
   schema='staging',
   file_format='delta',
