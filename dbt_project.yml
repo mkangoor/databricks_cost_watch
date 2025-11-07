@@ -10,9 +10,11 @@ models:
       +tag: ["staging"]
     intermediate:
       +schema: intermediate
+      +materialized: incremental
       +tags: ["intermediate"]
     marts:
       +schema: marts
+      +materialized: incremental
       +tags: ["marts"]
 
 data_tests:
