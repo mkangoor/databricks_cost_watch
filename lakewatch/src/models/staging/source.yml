@@ -1,0 +1,8 @@
+version: 2
+sources:
+  - name: billing_data
+    catalog: system
+    schema: billing
+    tables:
+      - name: list_prices
+      - name: usage

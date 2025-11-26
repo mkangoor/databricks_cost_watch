@@ -1,0 +1,32 @@
+resources:
+  jobs:
+    lakewatch_job:
+      name: lakewatch_job
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      email_notifications:
+        on_failure:
+          - tsuman.maks@gmail.com
+
+      tasks:
+        - task_key: dbt
+          new_cluster:
+            spark_version: 14.3.x-scala2.12 # Or a recent, stable version
+            node_type_id: Standard_DS3_v2  # Use a node type supported by your Free Edition
+            num_workers: 0                 # Single-node cluster for light work
+            custom_tags:
+              cluster_owner: ${workspace.current_user.short_name}
+          dbt_task:
+            project_directory: .
+            # The default schema, catalog, etc. are defined in ../dbt_profiles/profiles.yml
+            profiles_directory: dbt_profiles/
+            commands:
+            # The dbt commands to run (see also dbt_profiles/profiles.yml; dev_schema is used in the dev profile)
+            - 'dbt deps --target=${bundle.target}'
+            - 'dbt seed --target=${bundle.target} --vars "{ dev_schema: ${workspace.current_user.short_name} }"'
+            - 'dbt run --target=${bundle.target} --vars "{ dev_schema: ${workspace.current_user.short_name} }"'
