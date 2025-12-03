@@ -1,10 +1,10 @@
 {{ config(
   materialized='incremental',
   incremental_strategy='merge',
-  incremental_predicates = [
-      "DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"
-    ],
-  unique_key=['workspace_id','account_id', 'sku_name', 'cloud', 'usage_unit'],
+   unique_key=[
+    'workspace_id','account_id','sku_name','cloud','usage_unit',
+    'billing_origin_product','usage_date','job_id'
+  ],
   schema='intermediate',
   file_format='delta',
   tags=['int_usage']

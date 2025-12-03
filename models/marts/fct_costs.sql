@@ -1,10 +1,7 @@
 {{ config(
   materialized='incremental',
   incremental_strategy='merge',
-  incremental_predicates = [
-      "DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"
-    ],
-  unique_key=['workspace_id','account_id','sku_name','cloud','usage_unit'],
+  unique_key=['workspace_id','account_id','usage_date','sku_name','job_id','cloud','usage_unit'],
   schema='marts',
   file_format='delta',
   tags=['fct_costs']
@@ -28,6 +25,13 @@ select
   where
     u.usage_date between p.price_start_date
     and p.price_end_date
+    {% if is_incremental() %}
+      -- only process usage_dates at or after the current max in the target
+      and u.usage_date >= (
+        select coalesce(max(usage_date), '1900-01-01')
+        from {{ this }}
+      )
+    {% endif %}
   group by
     u.workspace_id,
     u.account_id,
