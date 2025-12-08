@@ -22,15 +22,11 @@
     sum(usage_quantity) as usage_quantity
   from
     {{ ref('stg_usage') }}
-    {% if is_incremental() %}
-    where
-    usage_date > (
-        select
-        coalesce(max(usage_date), '1900-01-01')
-        from
-        {{ this }}
+  {% if is_incremental() %}
+    where usage_date >= dateadd(day, -7,
+      (select coalesce(max(usage_date), '1900-01-01') from {{ this }})
     )
-    {% endif %}
+  {% endif %}
   group by
     1,
     2,
