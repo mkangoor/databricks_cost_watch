@@ -32,7 +32,7 @@ models:
       +materialized: incremental
       +tag: ["staging"]
     intermediate:
-      +schema: intermediate
+      +schema: intermediatea
       +materialized: incremental
       +tags: ["intermediate"]
     marts:

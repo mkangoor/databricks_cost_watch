@@ -1,10 +1,5 @@
 {{ config(
-  materialized='incremental',
-  incremental_strategy='merge',
-  incremental_predicates = [
-      "DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"
-    ],
-  unique_key=['account_id', 'sku_name', 'cloud', 'usage_unit'],
+  materialized='table',
   schema='staging',
   file_format='delta',
   tags=['stg_prices']
@@ -16,19 +11,11 @@ select
     cloud,
     usage_unit,
     pricing.effective_list.default as price,
-    date_format(price_start_time, 'yyyy-MM-dd') as price_start_date,
-    date_format(
-      coalesce(price_end_time, current_timestamp()),
-      'yyyy-MM-dd'
-    ) as price_end_date
+    cast(date_format(price_start_time, 'yyyy-MM-dd') as date) as price_start_date,
+    cast(coalesce(price_end_time, to_timestamp('9999-12-31', 'yyyy-MM-dd')) as date) as price_end_date
 from 
     {{ source('billing_data', 'list_prices') }}
-    {% if is_incremental() %}
-    where
-    date_format(price_start_time, 'yyyy-MM-dd') > (
-        select
-        coalesce(max(price_start_date), '1900-01-01')
-        from
-        {{ this }}
-    )
-    {% endif %}
+qualify row_number() over (
+    partition by account_id, sku_name, cloud, pricing.effective_list.default
+    order by price_start_date desc
+) = 1

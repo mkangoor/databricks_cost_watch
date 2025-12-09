@@ -6,7 +6,7 @@ bundle:
   uuid: 9f54d217-b861-4c67-bf99-5d8fe2abd253
 
 include:
-  - resources/*.yml
+  - resources/lakewatch.dashboard.yml
 
 variables:
   warehouse_id:
