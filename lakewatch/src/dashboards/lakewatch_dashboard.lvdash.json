@@ -1,0 +1,330 @@
+{
+  "datasets": [
+    {
+      "name": "3f30f625",
+      "displayName": "fct_costs",
+      "queryLines": [
+        "SELECT * FROM lakewatch.dbt_marts.fct_costs"
+      ]
+    },
+    {
+      "name": "fcbcba9e",
+      "displayName": "m_over_m",
+      "queryLines": [
+        "SELECT year(usage_date)|| '-' || month(usage_date), sum(cost) FROM lakewatch.dbt_marts.fct_costs\n",
+        "GROUP BY year(usage_date)|| '-' || month(usage_date)\n",
+        "ORDER BY year(usage_date)|| '-' || month(usage_date)"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "916bcbad",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "579aed20",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "3f30f625",
+                  "fields": [
+                    {
+                      "name": "sum(cost)",
+                      "expression": "SUM(`cost`)"
+                    },
+                    {
+                      "name": "usage_unit",
+                      "expression": "`usage_unit`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(cost)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "usage_unit",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 2,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "0900fefd",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "3f30f625",
+                  "fields": [
+                    {
+                      "name": "sum(cost)",
+                      "expression": "SUM(`cost`)"
+                    },
+                    {
+                      "name": "sku_name",
+                      "expression": "`sku_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(cost)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sku_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 1,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "86d6413b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "3f30f625",
+                  "fields": [
+                    {
+                      "name": "sku_name",
+                      "expression": "`sku_name`"
+                    },
+                    {
+                      "name": "monthly(usage_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `usage_date`)"
+                    },
+                    {
+                      "name": "sum(cost)",
+                      "expression": "SUM(`cost`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(usage_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(cost)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sku_name",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "custom-order",
+                      "orderedValues": [
+                        "INTERNET_EGRESS_FROM_US_EAST_OHIO",
+                        "PREMIUM_ALL_PURPOSE_SERVERLESS_COMPUTE_US_EAST_OHIO",
+                        "PREMIUM_DATABRICKS_STORAGE_US_EAST_OHIO",
+                        "PREMIUM_JOBS_SERVERLESS_COMPUTE_US_EAST_OHIO",
+                        "PREMIUM_SERVERLESS_SQL_COMPUTE_US_EAST_OHIO",
+                        "PUBLIC_CONNECTIVITY_DATA_PROCESSED_US_EAST_OHIO"
+                      ]
+                    }
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "50ebf398",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "3f30f625",
+                  "fields": [
+                    {
+                      "name": "job_id",
+                      "expression": "`job_id`"
+                    },
+                    {
+                      "name": "monthly(usage_date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `usage_date`)"
+                    },
+                    {
+                      "name": "sum(cost)",
+                      "expression": "SUM(`cost`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(usage_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(cost)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "job_id",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 13,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "8756d47a",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "3f30f625",
+                  "fields": [
+                    {
+                      "name": "sum(cost)",
+                      "expression": "SUM(`cost`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(cost)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "TOTAL COST ALL TIME:"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "aec449bf",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "70f839f5",
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {},
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "genieSpace": {
+      "isEnabled": false
+    },
+    "applyModeEnabled": false
+  }
+}
