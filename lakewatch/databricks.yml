@@ -6,7 +6,7 @@ bundle:
   uuid: 9f54d217-b861-4c67-bf99-5d8fe2abd253
 
 include:
-  - resources/lakewatch.dashboard.yml
+  - resources/*.yml
 
 variables:
   warehouse_id:
@@ -29,7 +29,7 @@ targets:
     mode: development
     workspace:
       host: https://dbc-84aff3a4-d679.cloud.databricks.com
-      root_path: /Workspace/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     run_as:
       user_name: ${workspace.current_user.userName}
     variables:

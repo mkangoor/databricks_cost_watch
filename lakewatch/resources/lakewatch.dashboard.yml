@@ -1,6 +1,6 @@
 resources:
   dashboards:
     lakewatch_dashboard:
-      display_name: '[DEV] TEST'
-      file_path: ../src/dashboards/[DEV]test.lvdash.json
+      display_name: 'lakewatch Dashboard'
+      file_path: ../src/dashboards/lakewatch_dashboard.lvdash.json
       warehouse_id: ${var.warehouse_id}

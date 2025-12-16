@@ -1,9 +1,9 @@
-name: 'lakewatch'
+name: lakewatch
 version: '1.0.0'
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'lakewatch'
+profile: lakewatch
 
 # These configurations specify where dbt should look for different types of files.
 # For Databricks asset bundles, we put everything in src, as you may have

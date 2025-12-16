@@ -22,5 +22,5 @@ log "✅ host exported           : ${DATABRICKS_HOST}."
 log "✅ warehouse path exported : ${WAREHOUSE_HTTP_PATH}."
 log "✅ warehouse_id exported   : ${WAREHOUSE_ID}."
 
-databricks bundle validate --profile DEFAULT
+databricks bundle validate --target dev --profile DEFAULT
 databricks bundle deploy --target dev --profile DEFAULT
