@@ -7,6 +7,7 @@ resources:
 
       git_source:
         git_url: https://github.com/mkangoor/databricks_cost_watch.git
+        git_provider: github
         git_branch: feature/dev-phase-1
 
       tasks:
