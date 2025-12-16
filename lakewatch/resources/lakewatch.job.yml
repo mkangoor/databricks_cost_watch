@@ -2,28 +2,36 @@ resources:
   jobs:
     lakewatch_job:
       name: lakewatch_job
-      tag:
+      tags:
         Pipeline: lakewatch
+
+      git_source:
+        git_url: https://github.com/mkangoor/databricks_cost_watch.git
+        git_branch: feature/dev-phase-1
+
       tasks:
         - task_key: lakewatch-cost-job
           max_retries: 2
+          environment_key: dbt-default
           dbt_task:
-            project_directory: ${workspace.root_path}/files
+            source: GIT
+            project_directory: .
             profiles_directory: dbt_profiles
             commands:
-            - dbt deps --target=${bundle.target}
-            - dbt seed --target=${bundle.target}
-            - dbt run --target=${bundle.target}
-            warehouse_id: ${var.warehouse_id} 
+              - "dbt deps --target=${bundle.target}"
+              - "dbt seed --target=${bundle.target}"
+              - "dbt run  --target=${bundle.target}"
+            warehouse_id: ${var.warehouse_id}
             catalog: lakewatch
-            source: WORKSPACE
-          environment_key: dbt-default
+
       queue:
         enabled: true
+
       environments:
         - environment_key: dbt-default
           spec:
-            dependencies:
-              - dbt-databricks>=1.0.0,<2.0.0
             environment_version: "4"
+            dependencies:
+              - "dbt-databricks>=1.0.0,<2.0.0"
+
       performance_target: PERFORMANCE_OPTIMIZED
