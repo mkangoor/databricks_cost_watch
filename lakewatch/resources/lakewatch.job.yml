@@ -17,7 +17,7 @@ resources:
           dbt_task:
             source: GIT
             project_directory: .
-            profiles_directory: dbt_profiles
+            profiles_directory: .
             commands:
               - "dbt deps --target=${bundle.target}"
               - "dbt seed --target=${bundle.target}"
