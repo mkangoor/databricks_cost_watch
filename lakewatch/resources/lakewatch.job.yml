@@ -16,8 +16,8 @@ resources:
           environment_key: dbt-default
           dbt_task:
             source: GIT
-            project_directory: .
-            profiles_directory: .
+            project_directory: lakewatch
+            profiles_directory: lakewatch
             commands:
               - "dbt deps --target=${bundle.target}"
               - "dbt seed --target=${bundle.target}"
