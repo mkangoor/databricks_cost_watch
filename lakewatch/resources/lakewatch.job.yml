@@ -17,10 +17,9 @@ resources:
           dbt_task:
             source: GIT
             project_directory: lakewatch
-            profiles_directory: lakewatch
+            profiles_directory: lakewatch/dbt_profiles
             commands:
               - "dbt deps --target=${bundle.target}"
-              - "dbt seed --target=${bundle.target}"
               - "dbt run  --target=${bundle.target}"
             warehouse_id: ${var.warehouse_id}
             catalog: lakewatch
