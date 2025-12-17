@@ -17,7 +17,7 @@ prompts:
     default: lakewatch
   schema:
     hint: 'personal schema where dbt will build objects during development, example: tsuman_maks'
-    default: dbt
+    default: dev
   threads:
     hint: 'threads to use during development, 1 or more'
     type: 'int'
