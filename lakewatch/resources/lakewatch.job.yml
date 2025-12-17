@@ -2,8 +2,12 @@ resources:
   jobs:
     lakewatch_job:
       name: lakewatch_job
-      tag:
+      tags:
         Pipeline: lakewatch
+      schedule:
+        quartz_cron_expression: 12 0 5 * * ?
+        timezone_id: America/New_York
+        pause_status: UNPAUSED
       tasks:
         - task_key: lakewatch-cost-job
           max_retries: 2
