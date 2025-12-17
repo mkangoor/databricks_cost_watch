@@ -2,20 +2,24 @@ resources:
   jobs:
     lakewatch_job:
       name: lakewatch_job
-      tag:
+      tags:
         Pipeline: lakewatch
+      schedule:
+        quartz_cron_expression: 12 0 5 * * ?
+        timezone_id: America/New_York
+        pause_status: UNPAUSED
       tasks:
         - task_key: lakewatch-cost-job
           max_retries: 2
           dbt_task:
-            project_directory: ${workspace.root_path}/files
-            profiles_directory: dbt_profiles
+            project_directory: ${workspace.root_path}/files/
+            profiles_directory: ./dbt_profiles
             commands:
             - dbt deps --target=${bundle.target}
-            - dbt seed --target=${bundle.target}
-            - dbt run --target=${bundle.target}
+            - dbt run 
             warehouse_id: ${var.warehouse_id} 
-            catalog: lakewatch
+            catalog: ${var.catalog}
+            schema: ${bundle.target}
             source: WORKSPACE
           environment_key: dbt-default
       queue:

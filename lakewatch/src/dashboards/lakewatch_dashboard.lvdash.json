@@ -4,14 +4,14 @@
       "name": "3f30f625",
       "displayName": "fct_costs",
       "queryLines": [
-        "SELECT * FROM lakewatch.dbt_marts.fct_costs"
+        "SELECT * FROM lakewatch.dev_marts.fct_costs"
       ]
     },
     {
       "name": "fcbcba9e",
       "displayName": "m_over_m",
       "queryLines": [
-        "SELECT year(usage_date)|| '-' || month(usage_date), sum(cost) FROM lakewatch.dbt_marts.fct_costs\n",
+        "SELECT year(usage_date)|| '-' || month(usage_date), sum(cost) FROM lakewatch.dev_marts.fct_costs\n",
         "GROUP BY year(usage_date)|| '-' || month(usage_date)\n",
         "ORDER BY year(usage_date)|| '-' || month(usage_date)"
       ]

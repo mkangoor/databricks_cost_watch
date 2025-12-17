@@ -16,6 +16,7 @@ variables:
     description: The suffix to use for the assets
   catalog:
     description: The target catalog
+    default: lakewatch
 
 # Deployment targets.
 # The default schema, catalog, etc. for dbt are defined in dbt_profiles/profiles.yml
