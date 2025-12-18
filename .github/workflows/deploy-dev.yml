@@ -1,5 +1,9 @@
 name: Deploy Databricks Bundle
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [ "main" ]
@@ -25,11 +29,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Databricks CLI
         run: |
+          echo "🚀 Installing Databricks CLI"
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
       - name: Validate bundle
         run: databricks bundle validate --target dev
       - name: Deploy bundle
-        run: databricks bundle deploy --target dev --force
+        run: |
+          echo "🚀 Deploying Databricks Bundle to Dev"
+          echo "Using Databricks Host: $DATABRICKS_HOST"
+          echo "Using Warehouse HTTP Path: $WAREHOUSE_HTTP_PATH"
+          databricks bundle deploy --target dev --force
   
   deploy-prod:
     runs-on: ubuntu-latest
