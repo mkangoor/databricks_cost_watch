@@ -17,6 +17,9 @@ variables:
   catalog:
     description: The target catalog
     default: lakewatch
+  email:
+    description: The email to use for alerts
+    default: tsuman.maks@gmail.com
 
 # Deployment targets.
 # The default schema, catalog, etc. for dbt are defined in dbt_profiles/profiles.yml
