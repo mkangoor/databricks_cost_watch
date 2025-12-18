@@ -12,7 +12,7 @@ resources:
         source:
           name: "daily_cost"         # column name in the query result
           display: "Daily Cost"      # label shown in the UI
-          aggregation: "MAX"        # or "SUM" / "AVG" depending on your query
+          aggregation: "MAX"        
         comparison_operator: "GREATER_THAN"
         threshold:
           value:

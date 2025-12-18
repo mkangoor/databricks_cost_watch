@@ -1,4 +1,4 @@
-name: Deploy Databricks Bundle (dev)
+name: Deploy Databricks Bundle
 
 on:
   push:
