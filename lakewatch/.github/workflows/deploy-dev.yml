@@ -3,7 +3,6 @@ name: Deploy Databricks Bundle
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
 
 jobs:
   deploy:
