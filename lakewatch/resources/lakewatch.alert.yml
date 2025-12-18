@@ -1,0 +1,26 @@
+resources:
+  alerts:
+    lakewatch_alert:
+      display_name: "Lakewatch Daily Cost Alert"
+      query_text: "SELECT SUM(cost) AS daily_cost FROM lakewatch.dev_marts.fct_costs WHERE usage_date = current_date"
+      warehouse_id: ${var.warehouse_id} 
+      schedule:
+        quartz_cron_schedule: "8 36 14 * * ?"
+        timezone_id: "America/New_York"
+        pause_status: UNPAUSED
+      evaluation:
+        source:
+          name: "daily_cost"         # column name in the query result
+          display: "Daily Cost"      # label shown in the UI
+          aggregation: "MAX"        # or "SUM" / "AVG" depending on your query
+        comparison_operator: "GREATER_THAN"
+        threshold:
+          value:
+            double_value: 2
+        empty_result_state: "OK"
+        # Who to notify
+        notification:
+          notify_on_ok: false
+          retrigger_seconds: 86400
+          subscriptions:
+            - user_email: "${var.email}"
