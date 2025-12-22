@@ -27,7 +27,7 @@ select
     usage_metadata.job_run_id as job_run_id,
     usage_metadata.cluster_id as cluster_id,
     usage_quantity,
-    CAST(product_features as string) as product_features
+    product_features
 from 
     {{ source('billing_data', 'usage') }}
 {% if is_incremental() %}
